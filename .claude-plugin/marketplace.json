@@ -1,0 +1,18 @@
+{
+  "name": "qortara-logic-plugin",
+  "description": "Official Qortara Logic distribution from MythologIQ Labs, LLC: the Claude Code plugin marketplace. The ChatGPT edition is distributed through the ChatGPT plugin directory.",
+  "owner": {
+    "name": "MythologIQ Labs, LLC",
+    "url": "https://qortara.com"
+  },
+  "plugins": [
+    {
+      "name": "qortara-logic",
+      "source": {
+        "source": "github",
+        "repo": "MythologIQ-Labs-LLC/qortara-logic-plugin"
+      },
+      "description": "Plan and check AI-assisted software work against the rules and evidence you supply, using Qortara Logic's hosted, read-only evaluator."
+    }
+  ]
+}

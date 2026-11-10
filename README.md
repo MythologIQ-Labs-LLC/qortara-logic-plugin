@@ -1,55 +1,98 @@
-# Qortara Logic for Claude Code
+# Qortara Logic for ChatGPT and Claude
 
 ![Qortara Logic](assets/qortara-logic.png)
 
-**Govern AI-assisted development with structured workflows, policy evaluation and evidence checks.**
+Qortara Logic helps you plan and check AI-assisted software work against the rules and evidence you supply. It adds five workflow
+skills to your AI assistant and connects them to Qortara Logic's hosted, read-only evaluator. ChatGPT and Claude Code get the same
+skills, the same 12 hosted tools and the same account.
 
-Qortara Logic is a development governance product from **MythologIQ Labs, LLC**. Its Claude Code plugin provides five guided workflows and a secure connection to the hosted Qortara Logic MCP evaluator. It helps teams examine whether a proposed action is consistent with the policies, plans and evidence they supply.
+This repository is the official public distribution home for Qortara Logic. It contains only plugin files: skills, reference
+notes, manifests and branding. The Qortara Logic engine is a hosted service and is not part of this repository.
 
-> **Release status:** Public distribution is in pre-release qualification. This repository is being prepared for the Anthropic directory. The installable bundle and proprietary plugin license are pending final approval; **do not treat this repository as a published or approved plugin yet**.
+> **Status:** both listings are being prepared for the ChatGPT and Claude directories, and neither is approved yet. Until a listing
+> is approved, use the installation steps below for the platform you use.
 
-## What the plugin provides
+## What you get on both platforms
 
-| Workflow | Purpose |
-| --- | --- |
-| **Orient** | Establish the development goal, context and applicable rules. |
-| **Govern** | Evaluate supplied policies and governance artifacts. |
-| **Deliver** | Check plans and gate artifacts before work proceeds through the host's own tools. |
-| **Assure** | Examine evidence integrity, interpret verdicts and report informational framework mappings. |
-| **Improve** | Translate supplied failures into proposed corrective actions. |
+- **Five skills:**
+  - `qortara-orient`: understand the goal and which of your rules apply.
+  - `qortara-govern`: evaluate the policies and governance manifests you supply.
+  - `qortara-deliver`: check plans and gate artifacts before your own tools make a change.
+  - `qortara-assure`: check evidence-chain integrity, parse verdicts, and show which framework controls your supplied evidence
+    maps to.
+  - `qortara-improve`: turn supplied failure records into proposed remediation steps.
+- **One hosted MCP server:** `https://api.qortara.com/mcp`, with 12 deterministic, read-only tools:
+  `qortara_capabilities`, `qortara_policy_evaluate`, `qortara_gate_validate`, `qortara_chain_verify`, `qortara_verdict_parse`,
+  `qortara_compliance_controls`, `qortara_compliance_report`, `qortara_applicability_resolve`, `qortara_route_preview`,
+  `qortara_context_select`, `qortara_manifest_resolve` and `qortara_remediation_report`.
+- **Reference notes** in `references/`, which the skills read.
 
-The hosted service exposes **12 read-only MCP tools** at `https://api.qortara.com/mcp`. All evaluations are limited to the inputs sent by your AI host.
+There are no hooks, no local server and no scripts. Nothing runs on your computer apart from your AI assistant.
 
-### Clear authority boundaries
+## Install in Claude Code
 
-Qortara Logic's hosted evaluator **does not** read local files, inspect private repositories, modify code, run tests, deploy software or authorize an action. Claude Code may perform development operations through its **own** tools and user-approved permissions; that authority does not come from Qortara's evaluation verdict.
+This repository is a Claude Code plugin marketplace (`.claude-plugin/marketplace.json`). In Claude Code 2.1.275 or later, install
+it in one step:
 
-Framework mappings are informational and do not constitute independent audit evidence, certification, regulatory conformity, legal advice or permission to act.
+```
+/plugin install qortara-logic --marketplace MythologIQ-Labs-LLC/qortara-logic-plugin
+```
 
-## Connectivity and privacy
+On earlier versions, add the marketplace first:
 
-The plugin uses authenticated HTTPS MCP transport. Account sign-in is handled at [auth.qortara.com](https://auth.qortara.com), and account activity and connections are available at [app.qortara.com](https://app.qortara.com).
+```
+/plugin marketplace add MythologIQ-Labs-LLC/qortara-logic-plugin
+/plugin install qortara-logic@qortara-logic-plugin
+```
 
-Tool arguments are sent to Qortara for evaluation. The hosted service is designed to retain activity **metadata**, not submitted tool arguments or results. See the forthcoming Qortara Logic-specific Privacy Notice and Terms for effective processing and retention commitments before distribution.
+Then run any skill, for example: "Use qortara-orient to check which rules apply to this change." When Claude Code asks you to
+authenticate the `qortara-logic` server, sign in with your email address and the one-time code Qortara emails you.
 
-The free hosted tier currently allows up to **200 evaluations per account per day**, subject to shared platform capacity and concurrency controls.
+## Install in ChatGPT
 
-## Installation
+ChatGPT uses a separate package built from the same skills and references: a ZIP containing `plugin.json`, `mcp.json`, the five
+skills, the references and the logo. It is distributed through the ChatGPT plugin directory, not installed from this repository.
 
-Installation instructions will be published after the exact distributable plugin, license and production acceptance tests are approved. The public repository is intentionally not presented as installable until those release gates pass.
+1. In ChatGPT, open the plugin directory and search for **Qortara Logic**. It appears there once OpenAI approves the listing.
+2. Add it, then sign in with your email address and the one-time code Qortara emails you.
+3. Ask, for example: "Orient this change: which Qortara workflow and rules apply?"
 
-## Distribution and licensing
+Each release lists the SHA-256 checksum of the ChatGPT ZIP in its release notes, so you can match it to what the directory serves.
 
-The underlying Qortara Logic engine and other MythologIQ products are **proprietary and are not included here**.
+## What it does not do
 
-A separate proprietary plugin license is under owner/legal review. **Public GitHub visibility is not an open-source grant or authorization to redistribute these materials.** The approved full plugin license will appear in `LICENSE` alongside the release package.
+The hosted tools evaluate only what your assistant sends them in a tool call. They do not read your files or repositories, edit
+code, run tests, review code, deploy or release anything, and they never grant permission to act. They cannot confirm that what
+you supply is accurate or complete, so results are only as good as those inputs. Any change to your project is made by your
+assistant's own tools, under your permission settings.
 
-## Support and security
+Framework mappings show how supplied evidence maps to EU AI Act, NIST AI RMF and SSDF references (an alignment aid, not a
+compliance determination). You classify your own AI systems and remain responsible for your own compliance.
 
-For product questions, contact **support@qortara.com**. Report potential security vulnerabilities privately to **security@qortara.com**, rather than disclosing credentials or exploit details in a public issue.
+## What it sends and where
 
-Project website: [qortara.com](https://qortara.com)
+- **Connection:** your assistant connects to `https://api.qortara.com/mcp`, operated by MythologIQ Labs, LLC on Cloudflare.
+- **Sign-in:** the first time, you sign in at `https://auth.qortara.com` (OAuth) with your email address and a one-time code.
+  Qortara keeps your email address to identify your account.
+- **Each tool call sends** the tool's arguments, which your assistant writes from your conversation, to the evaluator. The
+  evaluator returns a decision or findings.
+- **Qortara stores** only metadata about each call (time, app, tool, outcome and duration) for 30 days, never the arguments or
+  the result. You can see and delete it, disconnect apps, or delete your account at `https://app.qortara.com`.
 
----
+## Plans and limits
 
-© 2026 MythologIQ Labs, LLC. Qortara and Qortara Logic are MythologIQ Labs marks. All rights reserved.
+The free plan includes 200 tool calls a day, and a shared daily capacity limit applies across free accounts. If a limit is reached,
+the tool returns a plain refusal saying when it resets.
+
+## Support and policies
+
+- Support: `https://qortara.com/support/` or support@qortara.com
+- Privacy notice: `https://qortara.com/legal/logic-privacy`
+- Terms: `https://qortara.com/legal/logic-terms`
+- Security reports: see `SECURITY.md`
+
+See `LICENSE` for the terms that apply to the plugin files.
+
+## Disclaimer
+
+Qortara Logic evaluates the policies, artifacts and evidence you supply. Its results and framework mappings are informational and do not constitute legal advice, an independent audit, regulatory certification, or authorization to act.

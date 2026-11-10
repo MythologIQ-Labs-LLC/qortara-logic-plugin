@@ -1,0 +1,33 @@
+Qortara Logic Plugin License, version 1.0 (2026-11-10)
+Copyright (c) 2026 MythologIQ Labs, LLC. All rights reserved.
+"Files" means the files in this plugin bundle, including skills, references, manifests, README and logo.
+
+1. Use. MythologIQ Labs, LLC ("MythologIQ") grants you a free, non-exclusive, non-transferable, worldwide
+   license to install and use the Files, and make the copies needed to do so, to use the Qortara Logic
+   service with Claude, ChatGPT or another compatible AI host. You may modify your installed copy for your
+   own use or your organization's internal use.
+2. No redistribution. Except as Sections 1 and 3 allow, you may not distribute, publish, sell or sublicense
+   the Files, or modified versions of them, without MythologIQ's written permission.
+3. Official channels. MythologIQ distributes the Files through github.com/MythologIQ-Labs-LLC/qortara-logic-plugin,
+   the Anthropic Claude plugin directory, the OpenAI plugin directory and any channel it lists at
+   qortara.com/logic ("Official Channels"). Their operators may host, copy, scan, cache, index, display and
+   deliver the Files to users to run those channels. This license does not limit the rights GitHub's Terms of
+   Service give GitHub and its users to view and fork this repository on GitHub. A fork gives no right to
+   distribute the Files elsewhere or to use MythologIQ's trademarks.
+4. Trademarks. "Qortara", "Qortara Logic" and their logos are trademarks of MythologIQ. You may display them
+   only as part of the unmodified Files, or as the law allows without permission.
+5. Service. The Files connect to the hosted Qortara Logic service; they are not the service. The service is
+   governed by the Qortara Logic Terms (https://qortara.com/legal/logic-terms) and Privacy Notice
+   (https://qortara.com/legal/logic-privacy).
+6. Your AI host. The skills are instructions to your AI host. You and your host's permission settings decide
+   what actions run in your environment. Review them before approving.
+7. Termination. Your license ends automatically if you breach it; you must then delete the Files. MythologIQ
+   may stop distributing or updating the Files at any time.
+8. No warranty. THE FILES ARE PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED.
+9. Liability. TO THE EXTENT PERMITTED BY LAW, MYTHOLOGIQ IS NOT LIABLE FOR INDIRECT, INCIDENTAL, SPECIAL OR
+   CONSEQUENTIAL DAMAGES, AND ITS TOTAL LIABILITY ARISING FROM THE FILES IS LIMITED TO US$100. This does not
+   limit liability that the law does not allow to be limited, or your non-waivable consumer rights.
+10. Law. Maryland law governs, without regard to its conflict-of-laws rules. Disputes go to the state or federal
+    courts in Maryland, unless you have accepted the Qortara Logic Terms, in which case their dispute-resolution
+    section applies.
+11. General. All rights not expressly granted are reserved. If any part is unenforceable, the rest remains in effect.
