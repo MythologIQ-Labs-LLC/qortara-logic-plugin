@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "qortara-logic": {
+      "type": "http",
+      "url": "https://api.qortara.com/mcp"
+    }
+  }
+}

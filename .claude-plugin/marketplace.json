@@ -1,0 +1,18 @@
+{
+  "name": "qortara-logic-plugin",
+  "description": "Official Qortara Logic Claude Code plugin distribution from MythologIQ Labs, LLC.",
+  "owner": {
+    "name": "MythologIQ Labs, LLC",
+    "url": "https://qortara.com"
+  },
+  "plugins": [
+    {
+      "name": "qortara-logic",
+      "source": {
+        "source": "github",
+        "repo": "MythologIQ-Labs-LLC/qortara-logic-plugin"
+      },
+      "description": "Govern AI-assisted development with read-only policy, plan, and evidence evaluation."
+    }
+  ]
+}

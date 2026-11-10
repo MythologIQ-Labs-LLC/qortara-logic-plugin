@@ -1,0 +1,14 @@
+{
+  "name": "qortara-logic",
+  "displayName": "Qortara Logic",
+  "version": "0.2.0",
+  "description": "Plan and check AI-assisted software work against the rules and evidence you supply, using Qortara Logic's hosted, read-only evaluator. Results are informational; your own tools make any change.",
+  "author": {
+    "name": "MythologIQ Labs, LLC",
+    "url": "https://qortara.com/"
+  },
+  "homepage": "https://qortara.com/logic/",
+  "license": "LicenseRef-Qortara-Logic-Plugin",
+  "keywords": ["policy evaluation", "evidence checks", "gate artifacts", "framework mapping", "software delivery", "mcp"],
+  "icon": "./assets/qortara-logic.png"
+}
