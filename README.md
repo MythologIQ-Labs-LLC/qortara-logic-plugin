@@ -27,7 +27,7 @@ notes, manifests and branding. The Qortara Logic engine is a hosted service and 
   `qortara_context_select`, `qortara_manifest_resolve` and `qortara_remediation_report`.
 - **Reference notes** in `references/`, which the skills read.
 
-There are no hooks, no local server and no scripts. Nothing runs on your computer apart from your AI assistant.
+The **installed plugin** has no hooks, no local server, and no installation scripts. Nothing executes automatically when you install it. This repository also contains an optional, separately invoked connection helper under `tools/`; it is **not** part of the ChatGPT ZIP or Claude plugin payload.
 
 ## Install in Claude Code
 
@@ -47,6 +47,32 @@ On earlier versions, add the marketplace first:
 
 Then run any skill, for example: "Use qortara-orient to check which rules apply to this change." When Claude Code asks you to
 authenticate the `qortara-logic` server, sign in with your email address and the one-time code Qortara emails you.
+
+## Optional local Claude Code connection helper (development preview)
+
+The separate `tools/qortara-connect.mjs` utility is for users who prefer an explicit local setup command rather than manually entering the remote MCP URL. **It is not an engine installer**, doesn't install private source, and is not invoked when installing the plugin.
+
+Requires Node 20+ and an independently installed Claude Code CLI. Its default behavior makes **no changes**:
+
+```bash
+node tools/qortara-connect.mjs
+```
+
+To explicitly ask Claude Code to add the remote server to the **current directory's local MCP config**:
+
+```bash
+node tools/qortara-connect.mjs --install --scope local
+```
+
+To add it to your **user-wide Claude Code settings** instead:
+
+```bash
+node tools/qortara-connect.mjs --install --scope user
+```
+
+The helper invokes the official `claude mcp add --transport http` command once, without shell expansion on macOS/Linux; Windows uses `cmd.exe` with a fixed, validated command. No OAuth tokens are read or written by the helper. Authenticate afterward using Claude Code's `/mcp` flow. Review Claude Code's own reported status; a successful local CLI operation does **not** prove end-to-end OAuth or provider connectivity.
+
+**Release qualification:** This helper is on an isolated development branch until real Windows/macOS/Linux CLI acceptance, licensing and packaging review. Do not publish it as part of the submitted plugin manifest or create a one-click website installer from it.
 
 ## Install in ChatGPT
 
