@@ -27,7 +27,7 @@ notes, manifests and branding. The Qortara Logic engine is a hosted service and 
   `qortara_context_select`, `qortara_manifest_resolve` and `qortara_remediation_report`.
 - **Reference notes** in `references/`, which the skills read.
 
-The **installed plugin** has no hooks, no local server, and no installation scripts. Nothing executes automatically when you install it. This repository also contains an optional, separately invoked connection helper under `tools/`; it is **not** part of the ChatGPT ZIP or Claude plugin payload.
+The **installed plugin** has no hooks, no local server, and no installation scripts. Nothing executes automatically when you install it. This repository also contains an optional, separately invoked connection helper under `tools/`. Neither plugin manifest references or executes it. **Release packaging must explicitly exclude `tools/` until the helper passes platform and licensing qualification**, because a GitHub-sourced plugin may physically fetch repository files that are not executed.
 
 ## Install in Claude Code
 
