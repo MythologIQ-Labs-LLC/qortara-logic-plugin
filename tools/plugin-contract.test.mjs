@@ -13,7 +13,7 @@ test('one public Claude plugin exposes exactly five Qortara orchestration skills
     .filter(item => item.isDirectory()).map(item => item.name).sort();
   assert.deepEqual(found, [...expected].sort());
   for (const name of expected) {
-    const body = await read('skills/' + name + '/SKILL.md');
+    const body = (await read('skills/' + name + '/SKILL.md')).replace(/\r\n/g, '\n');
     assert.ok(body.startsWith('---\nname: ' + name + '\n'));
     assert.match(body, /qortara_capabilities/);
     assert.match(body, /\.\.\/\.\.\/references\/host-repository-bridge\.md/);
