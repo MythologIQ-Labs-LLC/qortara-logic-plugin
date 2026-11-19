@@ -14,7 +14,7 @@ notes, manifests and branding. The Qortara Logic engine is a hosted service and 
 ## What you get on both platforms
 
 - **Five skills:**
-  - `qortara-orient`: understand the goal and which of your rules apply.
+  - `qortara-orient`: inspect repository governance first; initialize missing files with authorized host tools, or maintain the existing baseline and select applicable rules.
   - `qortara-govern`: evaluate the policies and governance manifests you supply.
   - `qortara-deliver`: check plans and gate artifacts before your own tools make a change.
   - `qortara-assure`: check evidence-chain integrity, parse verdicts, and show which framework controls your supplied evidence
