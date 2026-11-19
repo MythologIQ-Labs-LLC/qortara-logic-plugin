@@ -37,3 +37,20 @@ test('backend capabilities are routed through existing five skills, with host-on
   assert.match(bridge, /never receives GitHub write authority/);
   assert.match(bridge, /12 evaluator tools is not a cap/);
 });
+
+test('public README gives exact installation, authentication, update and platform boundaries', async () => {
+  const readme = await read('README.md');
+  const marketplace = JSON.parse(await read('.claude-plugin/marketplace.json'));
+  const marketplaceName = marketplace.name;
+  const pluginName = JSON.parse(await read('.claude-plugin/plugin.json')).name;
+  assert.match(readme, new RegExp('\\/plugin install ' + pluginName + ' --marketplace MythologIQ-Labs-LLC\\/' + marketplaceName));
+  assert.ok(readme.includes('claude plugin update ' + pluginName + '@' + marketplaceName));
+  assert.ok(readme.includes('https://api.qortara.com/mcp'));
+  assert.ok(readme.includes('qortara_capabilities'));
+  assert.ok(readme.includes('codex mcp login qortara-logic'));
+  assert.ok(readme.includes('node tools/skill-kit.mjs verify'));
+  for (const skill of expected) assert.ok(readme.includes(skill));
+  assert.match(readme, /do not automatically|not automatic/i);
+  assert.match(readme, /not.*GitHub.*write authority|host.*separate.*authorization|needs separate authorization/i);
+  assert.match(readme, /Streamable HTTP/);
+});
