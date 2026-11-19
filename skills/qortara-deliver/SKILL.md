@@ -10,9 +10,13 @@ metadata:
 Deliver uses the hosted, read-only Qortara Logic tools to check the plan, policies and gate artifacts for a change before the user's own AI host and tools make it. Qortara Logic does not edit code, create files, run tests, refactor, scaffold or release anything. Read `../../references/host-repository-bridge.md`.
 
 1. Establish the objective, the owner and the repository details the user supplies, including the relevant architecture or governance manifest. The tool results are never permission to write.
-2. Call `qortara_capabilities` if it is unclear what the hosted service can do. It offers 12 read-only evaluation tools and no file, test or deployment actions.
+2. Call `qortara_capabilities` if it is unclear what the hosted service can do. Use the actually advertised hosted tool and workflow schemas, not a fixed count. If qortara_capabilities supports workflow_id = repository-refactor, fetch its canonical workflow manifest, hosted bridge and all required resources by manifest-listed workflow_path and matching workflow_digest. Refuse stale/missing resources and never simulate a partial workflow. A backend workflow is not an additional public skill or an executed repository change.
 3. Call `qortara_route_preview`, `qortara_context_select`, `qortara_policy_evaluate` and `qortara_gate_validate` on the governance packets, policies and gate artifacts the user supplies. Report the decisions and findings. Never create an approval or gate artifact to make a check pass.
 4. If the checks pass and the user wants to proceed, the user's own host and tools make the change under the user's permissions. Suggest that they work from the expected revision, keep protected files and other people's edits intact, and run tests on their own systems.
 5. Suggest that the user keep their plan, change, test results and review records in their own repository, and use Assure to check those records before merging or deploying.
 
 Return what was checked, each decision with its reasons, what is missing, and the next step for the user's own tools. Never say a change, test or release was done by Qortara Logic.
+
+### Delivery readiness and backend assessment
+
+When the running MCP actually exposes Repository Delivery Assessor as a tool or canonical workflow resource, use it through **Deliver** to assess issue, PR and release readiness. Otherwise perform a clearly labeled host-side assessment based on the objective, pinned source revision, real changes, test and exact-head CI receipts, governance and adversarial review, and meaningful acceptance. The agent's independently authorized host tools, never Qortara MCP, perform coding, commits and merges. Return to Assure for actual evidence qualification. No source-only tool is presumed deployed.
