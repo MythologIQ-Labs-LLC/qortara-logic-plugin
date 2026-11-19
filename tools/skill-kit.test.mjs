@@ -4,6 +4,7 @@ import { mkdtemp, mkdir, readFile, writeFile, lstat, symlink, rm } from 'node:fs
 import os from 'node:os';
 import path from 'node:path';
 import { runSkillKit } from './skill-kit.mjs';
+import { fileURLToPath } from 'node:url';
 
 async function fixture(fn) {
   const dir = await mkdtemp(path.join(os.tmpdir(), 'qortara-kit-'));
@@ -80,5 +81,27 @@ test('preexisting unrelated file in references cannot be replaced', async () => 
     await writeFile(existing, 'Not a Qortara reference');
     await assert.rejects(() => runSkillKit('install', root), /refusing overwrite/);
     assert.equal(await exists(path.join(root, 'skills/qortara-orient/SKILL.md')), false);
+  });
+});
+
+
+test('CRLF checkout keeps original installed skill and reference bytes', async () => {
+  await fixture(async (root, dir) => {
+    const sourceRoot = path.join(dir, 'public-package');
+    const original = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
+    const names = ['orient', 'govern', 'deliver', 'assure', 'improve'].map(n => 'skills/qortara-' + n + '/SKILL.md')
+      .concat(['host-repository-bridge', 'evaluator-applicability', 'evaluator-policy',
+        'evaluator-audit-verdict', 'evaluator-evidence-integrity', 'evaluator-compliance',
+        'evaluator-remediation'].map(n => 'references/' + n + '.md'));
+    for (const name of names) {
+      const destination = path.join(sourceRoot, name);
+      await mkdir(path.dirname(destination), { recursive: true });
+      const originalText = (await readFile(path.join(original, name), 'utf8')).replace(/\r\n/g, '\n');
+      await writeFile(destination, originalText.replace(/\n/g, '\r\n'));
+    }
+    assert.equal((await runSkillKit('install', root, { sourceRoot })).present, 12);
+    assert.equal((await runSkillKit('verify', root, { sourceRoot })).missing, 0);
+    const installed = await readFile(path.join(root, 'skills/qortara-orient/SKILL.md'), 'utf8');
+    assert.match(installed, /\r\nname: qortara-orient\r\n/);
   });
 });
