@@ -105,3 +105,27 @@ test('CRLF checkout keeps original installed skill and reference bytes', async (
     assert.match(installed, /\r\nname: qortara-orient\r\n/);
   });
 });
+
+test('Orient routes governance initialization and maintenance within five distributed skills', async () => {
+  await fixture(async root => {
+    const result = await runSkillKit('install', root);
+    assert.equal(result.files, 12);
+    assert.deepEqual(result.skills, ['qortara-orient','qortara-govern','qortara-deliver','qortara-assure','qortara-improve']);
+    const orient = await readFile(path.join(root, 'skills/qortara-orient/SKILL.md'), 'utf8');
+    const guide = await readFile(path.join(root, 'references/host-repository-bridge.md'), 'utf8');
+    for (const label of ['INITIALIZE', 'REPAIR / MAINTAIN', 'MAINTAIN', 'BLOCKED']) {
+      assert.ok(orient.includes(label), 'Orient missing route: ' + label);
+    }
+    for (const pathName of ['GOVERNANCE.md', 'SECURITY.md', 'ARCHITECTURE_INDEX.md',
+      '.qortara/ledger.jsonl', '.qortara/shadow.jsonl', '.qortara/.gitignore']) {
+      assert.ok(guide.includes(pathName), 'missing canonical bootstrap path: ' + pathName);
+    }
+    assert.match(guide, /qortara repository init/);
+    assert.match(guide, /qortara architecture init/);
+    assert.match(guide, /qortara repository inspect/);
+    assert.match(guide, /STRUCTURE_NOT_NATIVE_VERIFIED/);
+    assert.match(guide, /zero bytes/);
+    assert.match(guide, /exact-parent commit/);
+    assert.equal((await runSkillKit('verify', root)).missing, 0);
+  });
+});
