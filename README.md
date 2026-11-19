@@ -9,6 +9,8 @@ skills, the same 12 hosted tools and the same account.
 This repository is the official public distribution home for Qortara Logic. It contains only plugin files: skills, reference
 notes, manifests and branding. The Qortara Logic engine is a hosted service and is not part of this repository.
 
+**Using a different AI client?** Start with the [host-neutral remote MCP connection guide](CONNECT.md). It gives a direct HTTPS/OAuth setup route for compatible clients without downloading a local engine, and explains how to verify a real tool call, revoke access and recognize unsupported hosts. Compatibility depends on the specific client's actual MCP and OAuth capabilities; no single plugin installer works everywhere.
+
 > **Status:** both listings are being prepared for the ChatGPT and Claude directories, and neither is approved yet. Until a listing
 > is approved, use the installation steps below for the platform you use.
 
