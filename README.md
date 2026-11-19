@@ -26,7 +26,7 @@ notes, manifests and branding. The Qortara Logic engine is a hosted service and 
   `qortara_context_select`, `qortara_manifest_resolve` and `qortara_remediation_report`.
 - **Reference notes** in `references/`, which the skills read.
 
-There are no hooks, no local server and no scripts. Nothing runs on your computer apart from your AI assistant.
+There are no hooks, local server or automatically executed scripts. The optional offline skill-kit utility described below runs **only when you explicitly invoke it**. It copies the public Markdown skill files and their seven required references; it never configures or authenticates the remote MCP connection.
 
 ## Installation paths (what each one actually installs)
 
@@ -35,6 +35,7 @@ There are no hooks, no local server and no scripts. Nothing runs on your compute
 | ChatGPT custom MCP connection | Yes, after OAuth | Not automatically; separate supported skill/plugin import | No |
 | Claude Code plugin from this public GitHub repo | Yes, after OAuth | Yes, via plugin skill files | No |
 | Claude remote custom connector | Yes, after OAuth | Not automatically; connector is not a plugin | No |
+| Codex CLI remote MCP + optional local kit | Yes, after OAuth | Yes, if installed separately into a supported `.agents/skills` directory | No |
 | Other compatible remote-MCP client | Yes, after OAuth | Host-specific, not guaranteed | No |
 
 ## Install in Claude Code
@@ -69,6 +70,24 @@ If your ChatGPT account or workspace permits custom remote MCP servers:
 **Skills are a separate installation.** Connecting the personal MCP server makes the remote tools available; it does **not** automatically import the five `skills/qortara-*/SKILL.md` files. The public source files are in this repository. Use a supported host plugin or skill import flow for local instructions, where available, and verify each skill is present. A directory listing or a separately installed skill-aware plugin may combine both components later; do not treat a working MCP connection as proof of five installed skills.
 
 ChatGPT directory distribution and the separately packaged plugin ZIP are future optional channels, not prerequisites for using the live hosted MCP today. Do not wait for a listing to try the direct connection.
+
+## Install the five local skills independently (Codex CLI or a compatible skill host)
+
+This optional installer is for hosts that recognize an **Agent Skills directory**, such as Codex CLI. Installing skills is separate from connecting MCP and signing in. It does **not** install the private engine, configure OAuth, store credentials, execute hooks, edit host settings or claim that ChatGPT web supports local filesystem skills.
+
+With Node.js 20+ and a reviewed checkout of this **public** repository:
+
+```bash
+git clone https://github.com/MythologIQ-Labs-LLC/qortara-logic-plugin.git
+cd qortara-logic-plugin
+node tools/skill-kit.mjs plan --root "$HOME/.agents"
+node tools/skill-kit.mjs install --root "$HOME/.agents"
+node tools/skill-kit.mjs verify --root "$HOME/.agents"
+```
+
+On Windows PowerShell, use `--root "$HOME\.agents"` (an absolute path). To install only for one project, use its **absolute** `<project>/.agents` path instead. The utility puts five `SKILL.md` files under `<root>/skills/` and the seven referenced Markdown notes under `<root>/references/`. This retains the exact source-relative references inside the skill instructions; copying only `skills/` would break those links. `plan` makes no changes; `install` never overwrites modified files or follows destination symlinks; `verify` fails on missing or altered files. It requires an explicit location and has no network activity.
+
+**Then connect the MCP separately:** for Codex CLI, follow the [Codex steps in CONNECT.md](CONNECT.md#known-host-specific-routes), sign in through the host's OAuth flow, start a fresh session for skill discovery, and actually call `qortara_capabilities`. Successful file installation only proves the public skill files and references are present. It does not prove host loading, OAuth, authorization, tool execution or governance acceptance.
 
 ## What it does not do
 
