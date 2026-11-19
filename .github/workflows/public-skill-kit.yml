@@ -1,0 +1,26 @@
+name: Public skill kit
+on:
+  pull_request:
+  push:
+    branches: [main]
+permissions:
+  contents: read
+jobs:
+  offline-skill-kit:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v5
+        with:
+          node-version: '24'
+      - name: Exercise public skill install and integrity checks
+        run: node --test tools/skill-kit.test.mjs
+      - name: Check installer CLI and public source manifest
+        shell: bash
+        run: |
+          node tools/skill-kit.mjs help
+          node tools/skill-kit.mjs plan --root "$RUNNER_TEMP/qortara-skillkit" > "$RUNNER_TEMP/qortara-plan.json"
+          node -e "const p=require(process.env.RUNNER_TEMP+'/qortara-plan.json'); if(p.files!==12||p.missing!==12||p.skills.length!==5) process.exit(1)"
