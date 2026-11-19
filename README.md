@@ -2,17 +2,14 @@
 
 ![Qortara Logic](assets/qortara-logic.png)
 
-Qortara Logic helps you plan and check AI-assisted software work against the rules and evidence you supply. It adds five workflow
-skills to your AI assistant and connects them to Qortara Logic's hosted, read-only evaluator. ChatGPT and Claude Code get the same
-skills, the same 12 hosted tools and the same account.
+Qortara Logic helps you plan and check AI-assisted software work against the rules and evidence you supply. It provides five public workflow skills and 12 hosted, read-only MCP evaluator tools under one Qortara account. The skills and MCP connection are **separate components**: a host that connects only to MCP gets the tools, not an automatic local installation of the skill files.
 
 This repository is the official public distribution home for Qortara Logic. It contains only plugin files: skills, reference
 notes, manifests and branding. The Qortara Logic engine is a hosted service and is not part of this repository.
 
 **Using a different AI client?** Start with the [host-neutral remote MCP connection guide](CONNECT.md). It gives a direct HTTPS/OAuth setup route for compatible clients without downloading a local engine, and explains how to verify a real tool call, revoke access and recognize unsupported hosts. Compatibility depends on the specific client's actual MCP and OAuth capabilities; no single plugin installer works everywhere.
 
-> **Status:** both listings are being prepared for the ChatGPT and Claude directories, and neither is approved yet. Until a listing
-> is approved, use the installation steps below for the platform you use.
+> **Available now without directory approval:** Set up your own custom Qortara Logic MCP connection in a compatible ChatGPT or Claude host, or install the public Claude Code plugin directly from this GitHub repository. Approval of public ChatGPT/Claude directory listings is a separate, optional discovery milestone. Access to custom connections and local plugin/skill installation depends on the specific host and workspace permissions.
 
 ## What you get on both platforms
 
@@ -30,6 +27,15 @@ notes, manifests and branding. The Qortara Logic engine is a hosted service and 
 - **Reference notes** in `references/`, which the skills read.
 
 There are no hooks, no local server and no scripts. Nothing runs on your computer apart from your AI assistant.
+
+## Installation paths (what each one actually installs)
+
+| Route | Hosted MCP tools | Five workflow skills | Requires public directory listing? |
+| --- | --- | --- | --- |
+| ChatGPT custom MCP connection | Yes, after OAuth | Not automatically; separate supported skill/plugin import | No |
+| Claude Code plugin from this public GitHub repo | Yes, after OAuth | Yes, via plugin skill files | No |
+| Claude remote custom connector | Yes, after OAuth | Not automatically; connector is not a plugin | No |
+| Other compatible remote-MCP client | Yes, after OAuth | Host-specific, not guaranteed | No |
 
 ## Install in Claude Code
 
@@ -50,16 +56,19 @@ On earlier versions, add the marketplace first:
 Then run any skill, for example: "Use qortara-orient to check which rules apply to this change." When Claude Code asks you to
 authenticate the `qortara-logic` server, sign in with your email address and the one-time code Qortara emails you.
 
-## Install in ChatGPT
+## Connect in ChatGPT now (no directory approval required)
 
-ChatGPT uses a separate package built from the same skills and references: a ZIP containing `plugin.json`, `mcp.json`, the five
-skills, the references and the logo. It is distributed through the ChatGPT plugin directory, not installed from this repository.
+If your ChatGPT account or workspace permits custom remote MCP servers:
 
-1. In ChatGPT, open the plugin directory and search for **Qortara Logic**. It appears there once OpenAI approves the listing.
-2. Add it, then sign in with your email address and the one-time code Qortara emails you.
-3. Ask, for example: "Orient this change: which Qortara workflow and rules apply?"
+1. Open **Plugins**, select **Add (+)** and choose **Add custom MCP server**. Use the official [ChatGPT custom MCP instructions](https://help.openai.com/en/articles/12584461-connecting-custom-mcp-servers-in-chatgpt) if your screen differs.
+2. Enter **Qortara Logic** and the remote URL `https://api.qortara.com/mcp`. Use its supported **OAuth** connection; never paste a bearer token, password or email code into a prompt or plugin file.
+3. Review the tools and permissions, complete Qortara's email-code sign-in at `https://auth.qortara.com`, and enable the personal Qortara connection for a conversation.
+4. Ask ChatGPT to **call `qortara_capabilities`** and confirm the response identifies the hosted engine and advertised evaluator tools. A saved connector without a successful authenticated call is not sufficient.
+5. Request a bounded read-only evaluation. The hosted evaluator cannot independently inspect your repository, execute commands or authorize an agent to make changes.
 
-Each release lists the SHA-256 checksum of the ChatGPT ZIP in its release notes, so you can match it to what the directory serves.
+**Skills are a separate installation.** Connecting the personal MCP server makes the remote tools available; it does **not** automatically import the five `skills/qortara-*/SKILL.md` files. The public source files are in this repository. Use a supported host plugin or skill import flow for local instructions, where available, and verify each skill is present. A directory listing or a separately installed skill-aware plugin may combine both components later; do not treat a working MCP connection as proof of five installed skills.
+
+ChatGPT directory distribution and the separately packaged plugin ZIP are future optional channels, not prerequisites for using the live hosted MCP today. Do not wait for a listing to try the direct connection.
 
 ## What it does not do
 
