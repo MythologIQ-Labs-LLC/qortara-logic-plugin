@@ -56,7 +56,9 @@ async function sourceEntries(sourceRoot) {
   for (const name of SKILLS) {
     const relative = 'skills/' + name + '/SKILL.md';
     const bytes = await ensurePlainFile(path.join(sourceRoot, relative));
-    const text = bytes.toString('utf8');
+    // Git may check Markdown out with CRLF on Windows. Parse normalized text
+    // while installing and verifying the original bytes unchanged.
+    const text = bytes.toString('utf8').replace(/\r\n/g, '\n');
     if (!text.startsWith('---\n') || !text.includes('\nname: ' + name + '\n'))
       throw new Error('invalid skill identity: ' + name);
     for (const match of text.matchAll(/\.\.\/\.\.\/references\/([a-z0-9-]+\.md)/g)) {
