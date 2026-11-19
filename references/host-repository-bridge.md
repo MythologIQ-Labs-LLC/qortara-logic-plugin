@@ -1,6 +1,16 @@
 # Working with your own AI host and tools
 
-The five Qortara Logic skills call the same hosted, read-only tools. Those tools accept caller-supplied input only. Access to your files and repositories, and every change to them, belongs to your AI host and its tools, under your permissions.
+The public Qortara Logic plugin has **exactly five entrypoint skills**: Orient, Govern, Deliver, Assure and Improve. Each orchestrates the same hosted MCP at https://api.qortara.com/mcp. The underlying tools and canonical workflows may expand independently. CI Guard, Repository Delivery Assessor, initialization and refactoring are backend capabilities, not extra public skills.
+
+## Discovery, routing and execution contract for all five skills
+
+1. Call the authenticated qortara_capabilities tool in the current host session, inspect advertised tool names and input schemas, and distinguish the running deployed service from repository source. A historical list of 12 evaluator tools is not a cap. A configured MCP connection is not a verified call.
+2. Choose one of the five skills and a supported backend tool or canonical workflow resource; do not invent an unadvertised tool. Use a manifest-listed workflow_path and matching workflow_digest/revision when the service exposes typed resource retrieval. Refuse missing or stale resources instead of improvising an incomplete workflow.
+3. Qortara Logic **never receives GitHub write authority**. Hosted MCP responses are guidance, bounded evaluations or canonical server-owned resources. The connected ChatGPT/Claude host separately reads and writes repository files, runs tests and merges changes using its own authorization, with exact source revision and readback evidence.
+4. Keep governance source acceptance, actual host authority, independent review and execution receipts separate. A policy ALLOW, route preview, validated gate artifact or generated governance draft does not constitute an authorized change, accepted policy or successful outcome.
+5. Fail closed on missing OAuth, unavailable tools, refused calls, unsupported contracts, stale digests, rate limits and missing evidence. Report what the host actually executed versus what the MCP proposed or validated.
+
+These are **locally installed skill instructions**. Refresh them when orchestration rules change; a deployed backend-only tool update can be discovered through MCP without installing another skill.
 
 - Before checking a change, have your host gather the current repository, branch and revision, the affected files, the governing manifest and any review rules, and pass the relevant parts to the tools.
 - Tool results are deterministic readings of the supplied input. They are not a code review, proof of where the input came from, permission to write, or deployment approval.
