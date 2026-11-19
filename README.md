@@ -2,7 +2,7 @@
 
 ![Qortara Logic](assets/qortara-logic.png)
 
-Qortara Logic helps you plan and check AI-assisted software work against the rules and evidence you supply. It provides five public workflow skills and 12 hosted, read-only MCP evaluator tools under one Qortara account. The skills and MCP connection are **separate components**: a host that connects only to MCP gets the tools, not an automatic local installation of the skill files.
+Qortara Logic helps you plan and check AI-assisted software work against the rules and evidence you supply. It provides **exactly five public workflow skills** backed by one hosted MCP whose tool and canonical workflow inventory can expand independently. The legacy 12 evaluator tools were the first published baseline, not an upper limit. The skills and MCP connection are **separate components**: a host that connects only to MCP gets the tools, not an automatic local installation of the skill files.
 
 This repository is the official public distribution home for Qortara Logic. It contains only plugin files: skills, reference
 notes, manifests and branding. The Qortara Logic engine is a hosted service and is not part of this repository.
@@ -20,10 +20,10 @@ notes, manifests and branding. The Qortara Logic engine is a hosted service and 
   - `qortara-assure`: check evidence-chain integrity, parse verdicts, and show which framework controls your supplied evidence
     maps to.
   - `qortara-improve`: turn supplied failure records into proposed remediation steps.
-- **One hosted MCP server:** `https://api.qortara.com/mcp`, with 12 deterministic, read-only tools:
+- **One hosted MCP server:** `https://api.qortara.com/mcp`, with a historical baseline of 12 deterministic, read-only evaluator tools:
   `qortara_capabilities`, `qortara_policy_evaluate`, `qortara_gate_validate`, `qortara_chain_verify`, `qortara_verdict_parse`,
   `qortara_compliance_controls`, `qortara_compliance_report`, `qortara_applicability_resolve`, `qortara_route_preview`,
-  `qortara_context_select`, `qortara_manifest_resolve` and `qortara_remediation_report`.
+  `qortara_context_select`, `qortara_manifest_resolve` and `qortara_remediation_report`. Later backend contracts include `qortara_repository_init` for canonical initialization drafts and can expose typed workflow resources (including refactor). **Discover the deployed tools with an authenticated `qortara_capabilities` invocation.** CI Guard and Repository Delivery Assessor are underlying capabilities, not sixth/seventh skills.
 - **Reference notes** in `references/`, which the skills read.
 
 There are no hooks, local server or automatically executed scripts. The optional offline skill-kit utility described below runs **only when you explicitly invoke it**. It copies the public Markdown skill files and their seven required references; it never configures or authenticates the remote MCP connection.
@@ -126,3 +126,9 @@ See `LICENSE` for the terms that apply to the plugin files.
 ## Disclaimer
 
 Qortara Logic evaluates the policies, artifacts and evidence you supply. Its results and framework mappings are informational and do not constitute legal advice, an independent audit, regulatory certification, or authorization to act.
+
+## Update an installed Claude Code plugin
+
+When the five skill **instructions** change, update the installed marketplace plugin from this repository (marketplace identity: `qortara-logic@qortara-logic-plugin`), restart the Claude Code session and verify only Orient, Govern, Deliver, Assure and Improve are installed as Qortara entrypoints. A GitHub source read does not refresh Claude's plugin cache. Then verify MCP authentication and a real `qortara_capabilities` invocation; follow the current server-advertised tool schemas.
+
+Backend-only tools and workflow changes become available through the hosted MCP **after deployment**, without new plugin skills or a local Python engine. A merge to this public repository and a Cloudflare deployment are separate operations. Actual host acceptance remains separate from static package checks.

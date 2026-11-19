@@ -8,7 +8,7 @@ Five skills: Orient, Govern, Deliver, Assure and Improve. Each is a set of instr
 
 ## Hosted tools
 
-The hosted MCP server serves 12 deterministic, read-only tools. Each evaluates only the caller-supplied input in the tool call and reads no files.
+The 12 evaluators below are the **historical hosted baseline**, not a maximum. The backend may add tools such as qortara_repository_init and canonical workflow resources without adding any plugin-facing skills. Verify actual deployment with authenticated qortara_capabilities; sources may be ahead of Cloudflare. Most evaluators act on caller-supplied data, while initialization and workflow resource tools can return canonical **server-owned templates**. None receives GitHub write authority.
 
 | Tool | What it does |
 |---|---|
@@ -25,9 +25,11 @@ The hosted MCP server serves 12 deterministic, read-only tools. Each evaluates o
 | `qortara_compliance_controls` | Returns bundled mappings to EU AI Act, NIST AI RMF and SSDF references. An alignment aid, not a compliance determination. |
 | `qortara_compliance_report` | Computes coverage over supplied facts. Unverified facts are not attested evidence or a certification. |
 
+| `qortara_repository_init` (later backend contract) | Returns canonical repository initialization manifest and individually requested template files. The connected host separately reads/writes the customer repository under its own permissions. Availability must be verified live. |
+
 ## Limits
 
-- The tools do not read repositories, edit code, run tests, review code, record approvals, deploy or act.
+- The tools do not read customer repositories, edit code, run tests, record approvals, deploy or act on the host's behalf. Their canonical server-owned template and workflow resources are guidance, not execution.
 - Results are information about the supplied input. They are not permission to act. Your AI host, your tools and your permission settings decide what happens in your project.
 - If a tool refuses or is unavailable, report the check as not done. Never report a missing result as a pass.
 
