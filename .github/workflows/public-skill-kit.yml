@@ -17,7 +17,7 @@ jobs:
         with:
           node-version: '24'
       - name: Exercise public skill install and integrity checks
-        run: node --test tools/skill-kit.test.mjs
+        run: node --test tools/skill-kit.test.mjs tools/plugin-contract.test.mjs
       - name: Check installer CLI and public source manifest
         shell: bash
         run: |
