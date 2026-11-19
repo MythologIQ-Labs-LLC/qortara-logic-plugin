@@ -119,11 +119,11 @@ See [CONNECT.md](CONNECT.md) for a generic setup, security boundaries, troublesh
 
 | Skill | Purpose |
 | --- | --- |
-| **Orient** | Understand the repository, identify its applicable governance, and route initialization or repair |
-| **Govern** | Check policies, source authority, owner decisions, and lifecycle requirements |
-| **Deliver** | Guide authorized implementation, refactoring and delivery through required gates |
-| **Assure** | Check CI, review, audit, evidence integrity and release readiness |
-| **Improve** | Investigate recurring failures and propose evidence-based corrective actions |
+| **Orient** (`qortara-orient`) | Understand the repository, identify its applicable governance, and route initialization or repair |
+| **Govern** (`qortara-govern`) | Check policies, source authority, owner decisions, and lifecycle requirements |
+| **Deliver** (`qortara-deliver`) | Guide authorized implementation, refactoring and delivery through required gates |
+| **Assure** (`qortara-assure`) | Check CI, review, audit, evidence integrity and release readiness |
+| **Improve** (`qortara-improve`) | Investigate recurring failures and propose evidence-based corrective actions |
 
 These are **exactly five public entrypoints** in Claude and ChatGPT's intended orchestration design. The hosted MCP provides the underlying tools and canonical workflows. Its catalog can grow without adding a sixth skill. For example, governance initialization, CI Guard and Repository Delivery Assessor are **backend capabilities**, not separately installable public skills. **Invoke `qortara_capabilities` to see what is deployed**, not what merely exists in source.
 
