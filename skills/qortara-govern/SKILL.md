@@ -7,7 +7,7 @@ metadata:
 
 # Govern: evaluate supplied policies, manifests and gates
 
-Govern uses the hosted, read-only Qortara Logic tools to evaluate rules the user supplies. The tools return decisions and findings; they do not enforce rules, change files, record approvals or grant permission to act. Read `../../references/host-repository-bridge.md`.
+Govern routes rule evaluation and canonical governance initialization through the authenticated hosted MCP, using the shared discovery and authority contract in ../../references/host-repository-bridge.md. The tools return decisions and findings; they do not enforce rules, change files, record approvals or grant permission to act. Read `../../references/host-repository-bridge.md`.
 
 1. Collect the governance inputs the user supplies: repository and branch details, changed paths, governance revision and the governing documents. Treat each input as supplied by the caller; the tools cannot confirm where it came from.
 2. Call `qortara_manifest_resolve` with the supplied organization defaults and repository manifest. Missing overrides, stale sources or undeclared divergence come back as a block, not as permitted.
@@ -17,3 +17,8 @@ Govern uses the hosted, read-only Qortara Logic tools to evaluate rules the user
 6. Remind the user that their own host permissions, owners and review rules decide whether any change may proceed, whatever the policy result. If the inputs change, evaluate them again.
 
 Return each decision with its reasons, the inputs it was based on, and anything missing. Saving plans, decisions or gate artifacts is a task for the user's own tools.
+
+
+## Canonical repository initialization
+
+When the running MCP actually advertises qortara_repository_init, call it **without file** for the canonical manifest and owner questions; then fetch each needed file using exact names from that manifest. Ask the owner separately for maintainers (solo/team), visibility (private/public), and contributions (closed/invited/open), rather than assuming them. The connected AI host, **not Qortara MCP**, inspects the pinned repository, creates only missing drafts and genesis files under independently granted permissions, then reads back content and revision. Preserve any existing GOVERNANCE.md, SECURITY.md, AGENTS.md, CLAUDE.md, .claude/CLAUDE.md and ledger/Shadow histories; append only permitted Qortara-managed instructions and do not create duplicate Claude entrypoints. Generated drafts and structural checks require separate owner policy acceptance and real native host check receipts before qualification or refactoring. If the tool or native checks are absent, report NOT_ESTABLISHED or BLOCKED_NATIVE_EXECUTION rather than inventing success. Backend capabilities do not add a sixth skill.
