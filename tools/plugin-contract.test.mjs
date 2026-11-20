@@ -54,3 +54,18 @@ test('public README gives exact installation, authentication, update and platfor
   assert.match(readme, /not.*GitHub.*write authority|host.*separate.*authorization|needs separate authorization/i);
   assert.match(readme, /Streamable HTTP/);
 });
+
+test('hosted init handles throttling and locked governance without inventing completion', async () => {
+  const govern = await read('skills/qortara-govern/SKILL.md');
+  const bridge = await read('references/host-repository-bridge.md');
+  assert.match(govern, /file="all"/);
+  assert.match(govern, /retryAfterSeconds/);
+  assert.match(govern, /managed_append_section_sha256/);
+  assert.match(govern, /BLOCKED_NATIVE_EXECUTION/);
+  assert.match(bridge, /template lock/);
+  assert.match(bridge, /Capacity is not policy/);
+  assert.match(bridge, /contains no local Qortara CLI/);
+  const skills = (await readdir(path.join(root, 'skills'), {withFileTypes:true}))
+    .filter(x => x.isDirectory()).map(x => x.name).sort();
+  assert.deepEqual(skills, [...expected].sort());
+});
