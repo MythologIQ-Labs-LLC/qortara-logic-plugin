@@ -65,6 +65,20 @@ test('hosted init handles throttling and locked governance without inventing com
   assert.match(bridge, /template lock/);
   assert.match(bridge, /Capacity is not policy/);
   assert.match(bridge, /contains no local Qortara CLI/);
+  // A real external template lock may remain invalid after the host's required append.
+  // Host instruction drift must not revert to blocking Qortara's canonical AGENTS setup.
+  assert.match(govern, /OPEN_OWNER_ACTION/);
+  assert.match(govern, /AGENTS\.md.*must still be present in the canonical file/);
+  assert.match(govern, /unchanged prefix plus appended suffix/);
+  assert.match(bridge, /OPEN_OWNER_ACTION/);
+  assert.match(bridge, /Do not alter `template\.lock`/);
+  assert.match(bridge, /NOT_ESTABLISHED/);
+  assert.doesNotMatch(govern, /\*\*Do not append\*\* if the host discovers such a lock/);
+  assert.doesNotMatch(bridge, /prevents append until that governing contract is amended/);
+  // Canonical structural checks and the no-install byte verifier are not native check-all.
+  assert.match(govern, /file="validate"/);
+  assert.match(govern, /file="host-verifier"/);
+  assert.match(govern, /Neither is full native/);
   const skills = (await readdir(path.join(root, 'skills'), {withFileTypes:true}))
     .filter(x => x.isDirectory()).map(x => x.name).sort();
   assert.deepEqual(skills, [...expected].sort());
